@@ -22,13 +22,18 @@ class Ingredient
     #[Assert\Length(min: 2,max: 50,)]
     private ?string $name = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'float')]
+    #[Assert\NotNull()]
     #[Assert\Positive]
     #[Assert\LessThan(200)]
     private ?float $price = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'ingredients')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     /**
      * Constructor
@@ -84,7 +89,7 @@ class Ingredient
         return $this->name;
     }
 
-    /*public function getUser(): ?User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -94,5 +99,5 @@ class Ingredient
         $this->user = $user;
 
         return $this;
-    }*/
+    }
 }
