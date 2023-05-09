@@ -2,16 +2,14 @@
 
 namespace App\DataFixtures;
 
-//use App\Entity\Contact;
 use Faker\Factory;
 use App\Entity\User;
 use Faker\Generator;
 use App\Entity\Recipe;
 use App\Entity\Ingredient;
-//use App\Entity\Mark;
+use App\Entity\Mark;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
@@ -27,31 +25,6 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        // Users
-        /*$users = [];
-
-        $admin = new User();
-        $admin->setFullName('Administrateur de SymRecipe')
-            ->setPseudo(null)
-            ->SetEmail('admin@symrecipe.fr')
-            ->setRoles(['ROLE_USER', 'ROLE_ADMIN'])
-            ->setPlainPassword('password');
-
-        $users[] = $admin;
-        $manager->persist($admin);
-
-        for ($i = 0; $i < 10; $i++) {
-            $user = new User();
-            $user->setFullName($this->faker->name())
-                ->setPseudo(mt_rand(0, 1) === 1 ? $this->faker->firstName() : null)
-                ->setEmail($this->faker->email())
-                ->setRoles(['ROLE_USER'])
-                ->setPlainPassword('password');
-
-            $users[] = $user;
-            $manager->persist($user);
-        }*/
-
         // Users
         $users = [];
          for ($i = 0; $i < 10; $i++) {
@@ -78,7 +51,7 @@ class AppFixtures extends Fixture
         }
 
         // Recipes
-        //$recipes = [];
+        $recipes = [];
         for ($j = 0; $j < 25; $j++) {
             $recipe = new Recipe();
             $recipe->setName($this->faker->word())
@@ -88,7 +61,7 @@ class AppFixtures extends Fixture
                 ->setDescription($this->faker->text(300))
                 //->setPrice(mt_rand(0, 1) == 1 ? mt_rand(1, 1000) : null)
                 ->setIsFavorite(mt_rand(0, 1) == 1 ? true : false)
-                //->setIsPublic(mt_rand(0, 1) == 1 ? true : false)
+                ->setIsPublic(mt_rand(0, 1) == 1 ? true : false)
                 ->setUser($users[mt_rand(0, count($users) - 1)]);
                 
 
@@ -96,12 +69,12 @@ class AppFixtures extends Fixture
                 $recipe->addIngredient($ingredients[mt_rand(0, count($ingredients) - 1)]);
             }
 
-            //$recipes[] = $recipe;
+            $recipes[] = $recipe;
             $manager->persist($recipe);
         }
 
         // Marks
-        /*foreach ($recipes as $recipe) {
+        foreach ($recipes as $recipe) {
             for ($i = 0; $i < mt_rand(0, 4); $i++) {
                 $mark = new Mark();
                 $mark->setMark(mt_rand(1, 5))
@@ -110,19 +83,7 @@ class AppFixtures extends Fixture
 
                 $manager->persist($mark);
             }
-        }*/
-
-        // Contact
-        /*for ($i = 0; $i < 5; $i++) {
-            $contact = new Contact();
-            $contact->setFullName($this->faker->name())
-                ->setEmail($this->faker->email())
-                ->setSubject('Demande n°' . ($i + 1))
-                ->setMessage($this->faker->text());
-
-            $manager->persist($contact);
-        }*/
-
+        }
         $manager->flush();
     }
 }
