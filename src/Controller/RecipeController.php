@@ -44,7 +44,7 @@ class RecipeController extends AbstractController
         ]);
     }
 
-    /*#[Route('/recette/communaute', 'recipe.community', methods: ['GET'])]
+    #[Route('/recette/communaute', 'recipe.community', methods: ['GET'])]
     public function indexPublic(
         RecipeRepository $repository,
         PaginatorInterface $paginator,
@@ -65,7 +65,7 @@ class RecipeController extends AbstractController
         return $this->render('pages/recipe/community.html.twig', [
             'recipes' => $recipes
         ]);
-    }*/
+    }
 
     /**
      * This controller allow us to create a new recipe
@@ -194,7 +194,6 @@ class RecipeController extends AbstractController
      * @param Recipe $recipe
      * @return Response
      */
-
     #[Security("is_granted('ROLE_USER') and (recipe.getIsPublic() === true || user === recipe.getUser())")]
     #[Route('/recette/{id}', 'recipe.show', methods: ['GET', 'POST'])]
     public function show(
